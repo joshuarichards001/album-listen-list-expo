@@ -2,6 +2,7 @@ Native version of the Album Listen List web app (`~/dev/album-listen-list`, Reac
 
 ## Workflow
 
+- Work directly on `main`. Don't create feature branches or PRs.
 - Before any Expo, EAS, or React Native work, invoke the matching skill from the `expo` plugin (`expo-overview` if unsure which).
 - Add packages with `npx expo install <package>`, never `npm install <package>`.
 - After any code change, run `npm run format` then `npm run check` (Prettier check, `expo lint`, `tsc --noEmit`), and fix everything it reports before declaring the task done. Use `npm run lint:fix` for autofixable lint errors.
