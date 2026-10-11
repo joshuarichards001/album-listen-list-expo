@@ -1,0 +1,10 @@
+.expo/
+dist/
+web-build/
+ios/
+android/
+package-lock.json
+expo-env.d.ts
+.agents/
+.claude/skills/
+*.icon/

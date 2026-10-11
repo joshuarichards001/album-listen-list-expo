@@ -4,7 +4,9 @@ Native version of the Album Listen List web app (`~/dev/album-listen-list`, Reac
 
 - Before any Expo, EAS, or React Native work, invoke the matching skill from the `expo` plugin (`expo-overview` if unsure which).
 - Add packages with `npx expo install <package>`, never `npm install <package>`.
-- Run `npx expo lint` and `npx tsc --noEmit` before declaring any task done.
+- After any code change, run `npm run format` then `npm run check` (Prettier check, `expo lint`, `tsc --noEmit`), and fix everything it reports before declaring the task done. Use `npm run lint:fix` for autofixable lint errors.
+- Formatting is owned by Prettier (`.prettierrc`) and enforced through ESLint, so don't hand-format or add style rules to `eslint.config.js`.
+- `tsconfig.json` enables `noUncheckedIndexedAccess`: array and record lookups are `T | undefined`, so handle the `undefined` case (defaults, guards) rather than using `!`.
 - Routes live in `src/app/`. Keep components, hooks, and utils outside it.
 - Keep code comments to an absolute minimum. Only comment non-obvious gotchas that would cause a bug if missed (e.g. a deadlock or platform quirk). Don't write comments that explain what code does, restate names, narrate flow, or add JSDoc to simple functions. Put explanations in this file or the README instead.
 

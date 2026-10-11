@@ -52,8 +52,7 @@ export const createUserSlice: StateCreator<
       isAuthLoaded: true,
       id: user.id,
       spotifyId: user.user_metadata.provider_id ?? "",
-      displayName:
-        user.user_metadata.full_name ?? user.user_metadata.name ?? "",
+      displayName: user.user_metadata.full_name ?? user.user_metadata.name ?? "",
       profileImage: user.user_metadata.avatar_url ?? "",
     });
   },

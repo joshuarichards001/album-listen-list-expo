@@ -12,9 +12,7 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      {profileImage ? (
-        <Image source={profileImage} style={styles.avatar} />
-      ) : null}
+      {profileImage ? <Image source={profileImage} style={styles.avatar} /> : null}
       <Text style={styles.name}>{displayName || spotifyId}</Text>
       <Text style={styles.username}>@{spotifyId}</Text>
 

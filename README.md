@@ -41,7 +41,10 @@ src/
 ## Scripts
 
 ```bash
-npx expo lint     # lint
-npx tsc --noEmit  # typecheck
-npx expo-doctor   # check dependency and config issues
+npm run format      # format with Prettier
+npm run lint        # lint with ESLint (includes Prettier check)
+npm run lint:fix    # lint and autofix
+npm run typecheck   # tsc --noEmit
+npm run check       # format check + lint + typecheck
+npx expo-doctor     # check dependency and config issues
 ```

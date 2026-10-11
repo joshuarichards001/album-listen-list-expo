@@ -2,11 +2,7 @@ import Storage from "expo-sqlite/kv-store";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-import {
-  createUserSlice,
-  partializeUserSlice,
-  type UserSlice,
-} from "@/stores/user-slice";
+import { createUserSlice, partializeUserSlice, type UserSlice } from "@/stores/user-slice";
 
 export type RootState = UserSlice;
 

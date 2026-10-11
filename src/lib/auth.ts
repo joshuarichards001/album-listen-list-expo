@@ -7,7 +7,7 @@ import { useRootStore } from "@/stores/root-store";
 const redirectTo = Linking.createURL("");
 
 const getAuthParams = (url: string) => {
-  const [base, fragment = ""] = url.split("#");
+  const [base = "", fragment = ""] = url.split("#");
   const query = base.split("?")[1] ?? "";
   return new URLSearchParams(`${query}&${fragment}`);
 };

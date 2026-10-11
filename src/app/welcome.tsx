@@ -8,9 +8,7 @@ export default function WelcomeScreen() {
     <View style={styles.container}>
       <View style={styles.hero}>
         <Text style={styles.title}>Album Listen List</Text>
-        <Text style={styles.subtitle}>
-          Keep track of the albums you want to listen to.
-        </Text>
+        <Text style={styles.subtitle}>Keep track of the albums you want to listen to.</Text>
       </View>
 
       <Link href="/login" asChild>
