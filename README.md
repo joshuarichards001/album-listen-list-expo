@@ -32,11 +32,14 @@ Development builds use the `albumlistenlistexpo://` scheme instead, so they don'
 ```
 src/
 ├── app/          # Expo Router routes (welcome, login, home) and the root layout
-├── constants/    # Shared values such as colors
+├── global.css    # Tailwind entry point and design tokens (@theme)
 ├── hooks/        # React hooks
 ├── lib/          # Supabase client and auth helpers
-└── stores/       # Zustand store, split into slices
+├── stores/       # Zustand store, split into slices
+└── tw/           # className-aware wrappers around React Native components
 ```
+
+Styling uses [Tailwind CSS](https://tailwindcss.com) through [NativeWind v5](https://www.nativewind.dev/v5).
 
 ## Scripts
 

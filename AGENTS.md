@@ -10,6 +10,14 @@ Native version of the Album Listen List web app (`~/dev/album-listen-list`, Reac
 - Routes live in `src/app/`. Keep components, hooks, and utils outside it.
 - Keep code comments to an absolute minimum. Only comment non-obvious gotchas that would cause a bug if missed (e.g. a deadlock or platform quirk). Don't write comments that explain what code does, restate names, narrate flow, or add JSDoc to simple functions. Put explanations in this file or the README instead.
 
+## Styling
+
+- Tailwind via NativeWind v5, set up like Expo's `with-tailwindcss` example. Style with `className`, not `StyleSheet`.
+- `globalClassNamePolyfill` is off, so React Native components ignore `className`. Import them from `@/tw`, adding a `useCssElement` wrapper there when you need a new one.
+- Design tokens live in `src/global.css` under `@theme static`. Read one in JS (navigation options, `ActivityIndicator` color) with `useCSSVariable("--color-…")`.
+- `package.json` overrides `lightningcss` to `1.30.1`; newer versions fail to compile `global.css` ("expected an object-like struct named Specifier"). `nativewind` and `react-native-css` are a pinned prerelease pair; upgrade them together and recheck the override.
+- Keep `nativewind-env.d.ts` in the `tsconfig.json` `include` list, even though `**/*.ts` covers it. Without it, Metro rewrites and reformats `tsconfig.json` on start.
+
 ## Auth & State gotchas
 
 - **Env vars** (`EXPO_PUBLIC_*` in `.env.local`) are inlined at bundle time. Restart with `npx expo start --clear` after changing them.

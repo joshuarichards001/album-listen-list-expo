@@ -1,0 +1,18 @@
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css";
+@import "nativewind/theme";
+
+@theme static {
+  --color-background: #121212;
+  --color-foreground: #ffffff;
+  --color-subdued: #a7a7a7;
+  --color-spotify: #1db954;
+  --color-error: #f15e6c;
+
+  --text-subhead: 15px;
+  --text-body: 17px;
+  --text-title: 28px;
+  --text-title-lg: 32px;
+  --text-display: 36px;
+}

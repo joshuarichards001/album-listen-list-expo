@@ -1,9 +1,6 @@
-import { Image } from "expo-image";
-import { Pressable, StyleSheet, Text, View } from "react-native";
-
-import { colors } from "@/constants/colors";
 import { signOut } from "@/lib/auth";
 import { useRootStore } from "@/stores/root-store";
+import { Image, Pressable, Text, View } from "@/tw";
 
 export default function HomeScreen() {
   const displayName = useRootStore((state) => state.displayName);
@@ -11,52 +8,17 @@ export default function HomeScreen() {
   const profileImage = useRootStore((state) => state.profileImage);
 
   return (
-    <View style={styles.container}>
-      {profileImage ? <Image source={profileImage} style={styles.avatar} /> : null}
-      <Text style={styles.name}>{displayName || spotifyId}</Text>
-      <Text style={styles.username}>@{spotifyId}</Text>
+    <View className="flex-1 items-center justify-center gap-2 p-6">
+      {profileImage ? <Image source={profileImage} className="mb-2 size-24 rounded-full" /> : null}
+      <Text className="text-title font-bold text-foreground">{displayName || spotifyId}</Text>
+      <Text className="text-body text-subdued">@{spotifyId}</Text>
 
-      <Pressable style={styles.button} onPress={() => signOut()}>
-        <Text style={styles.buttonText}>Sign out</Text>
+      <Pressable
+        className="mt-8 rounded-full border border-subdued px-8 py-3"
+        onPress={() => signOut()}
+      >
+        <Text className="text-subhead font-semibold text-foreground">Sign out</Text>
       </Pressable>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 8,
-    padding: 24,
-  },
-  avatar: {
-    width: 96,
-    height: 96,
-    borderRadius: 48,
-    marginBottom: 8,
-  },
-  name: {
-    color: colors.text,
-    fontSize: 28,
-    fontWeight: "700",
-  },
-  username: {
-    color: colors.textSubdued,
-    fontSize: 17,
-  },
-  button: {
-    marginTop: 32,
-    borderColor: colors.textSubdued,
-    borderWidth: 1,
-    borderRadius: 999,
-    paddingVertical: 12,
-    paddingHorizontal: 32,
-  },
-  buttonText: {
-    color: colors.text,
-    fontSize: 15,
-    fontWeight: "600",
-  },
-});

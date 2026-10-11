@@ -1,12 +1,13 @@
 import { useState } from "react";
-import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator } from "react-native";
 
-import { colors } from "@/constants/colors";
 import { signInWithSpotify } from "@/lib/auth";
+import { Pressable, Text, useCSSVariable, View } from "@/tw";
 
 export default function LoginScreen() {
   const [isSigningIn, setIsSigningIn] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const backgroundColor = useCSSVariable("--color-background");
 
   const handleSignIn = async () => {
     setIsSigningIn(true);
@@ -21,62 +22,25 @@ export default function LoginScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Sign in</Text>
-      <Text style={styles.subtitle}>
+    <View className="flex-1 gap-4 p-6">
+      <Text className="text-title-lg font-bold text-foreground">Sign in</Text>
+      <Text className="mb-4 text-body text-subdued">
         Album Listen List uses your Spotify account to find albums.
       </Text>
 
       <Pressable
-        style={[styles.button, isSigningIn && styles.buttonDisabled]}
+        className={`items-center rounded-full bg-spotify py-4 ${isSigningIn ? "opacity-60" : ""}`}
         onPress={handleSignIn}
         disabled={isSigningIn}
       >
         {isSigningIn ? (
-          <ActivityIndicator color={colors.background} />
+          <ActivityIndicator color={backgroundColor} />
         ) : (
-          <Text style={styles.buttonText}>Continue with Spotify</Text>
+          <Text className="text-body font-bold text-background">Continue with Spotify</Text>
         )}
       </Pressable>
 
-      {error && <Text style={styles.error}>{error}</Text>}
+      {error && <Text className="text-center text-subhead text-error">{error}</Text>}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 24,
-    gap: 16,
-  },
-  title: {
-    color: colors.text,
-    fontSize: 32,
-    fontWeight: "700",
-  },
-  subtitle: {
-    color: colors.textSubdued,
-    fontSize: 17,
-    marginBottom: 16,
-  },
-  button: {
-    backgroundColor: colors.spotifyGreen,
-    borderRadius: 999,
-    paddingVertical: 16,
-    alignItems: "center",
-  },
-  buttonDisabled: {
-    opacity: 0.6,
-  },
-  buttonText: {
-    color: colors.background,
-    fontSize: 17,
-    fontWeight: "700",
-  },
-  error: {
-    color: colors.error,
-    fontSize: 15,
-    textAlign: "center",
-  },
-});
