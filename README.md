@@ -25,8 +25,6 @@ npx expo start --tunnel
 
 Scan the QR code with Expo Go on your phone.
 
-Use `--tunnel` whenever you test Spotify sign in. Without it, Expo Go's redirect URL uses your machine's LAN IP (`exp://192.168.x.x:8081`), and Supabase never redirects to IP-address hosts, even allow-listed ones. It falls back to the Site URL (`localhost`) and sign in fails. The tunnel gives Metro a hostname (`*.exp.direct`) that Supabase accepts. Plain `npx expo start` is fine for work that doesn't involve signing in.
-
 Development builds use the `albumlistenlistexpo://` scheme instead, so they don't need the tunnel.
 
 ## Project structure
