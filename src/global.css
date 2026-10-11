@@ -4,11 +4,21 @@
 @import "nativewind/theme";
 
 @theme static {
-  --color-background: #121212;
-  --color-foreground: #ffffff;
-  --color-subdued: #a7a7a7;
-  --color-spotify: #1db954;
-  --color-error: #f15e6c;
+  --color-background-base: #121212;
+  --color-background-highlight: #242424;
+  --color-background-hover: #333333;
+  --color-background-press: #000000;
+
+  --color-text-base: #ffffff;
+  --color-text-subdued: #a7a7a7;
+  --color-text-active: #777777;
+  --color-text-muted: #666666;
+
+  --color-spotify-green: #1ed760;
+  --color-spotify-green-active: #107f37;
+
+  --color-star: #eab308;
+  --color-danger: #ef4444;
 
   --text-subhead: 15px;
   --text-body: 17px;

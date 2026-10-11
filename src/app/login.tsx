@@ -7,7 +7,7 @@ import { Pressable, Text, useCSSVariable, View } from "@/tw";
 export default function LoginScreen() {
   const [isSigningIn, setIsSigningIn] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const backgroundColor = useCSSVariable("--color-background");
+  const backgroundColor = useCSSVariable("--color-background-base");
 
   const handleSignIn = async () => {
     setIsSigningIn(true);
@@ -23,24 +23,24 @@ export default function LoginScreen() {
 
   return (
     <View className="flex-1 gap-4 p-6">
-      <Text className="text-title-lg font-bold text-foreground">Sign in</Text>
-      <Text className="mb-4 text-body text-subdued">
+      <Text className="text-title-lg font-bold text-text-base">Sign in</Text>
+      <Text className="mb-4 text-body text-text-subdued">
         Album Listen List uses your Spotify account to find albums.
       </Text>
 
       <Pressable
-        className={`items-center rounded-full bg-spotify py-4 ${isSigningIn ? "opacity-60" : ""}`}
+        className={`items-center rounded-full bg-spotify-green py-4 ${isSigningIn ? "opacity-60" : ""}`}
         onPress={handleSignIn}
         disabled={isSigningIn}
       >
         {isSigningIn ? (
           <ActivityIndicator color={backgroundColor} />
         ) : (
-          <Text className="text-body font-bold text-background">Continue with Spotify</Text>
+          <Text className="text-body font-bold text-black">Continue with Spotify</Text>
         )}
       </Pressable>
 
-      {error && <Text className="text-center text-subhead text-error">{error}</Text>}
+      {error && <Text className="text-center text-subhead text-danger">{error}</Text>}
     </View>
   );
 }

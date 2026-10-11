@@ -14,8 +14,8 @@ export default function RootLayout() {
   useSupabaseAuthListener();
   const isAuthLoaded = useRootStore((state) => state.isAuthLoaded);
   const isSignedIn = useRootStore((state) => state.session !== null);
-  const backgroundColor = useCSSVariable("--color-background");
-  const foregroundColor = useCSSVariable("--color-foreground");
+  const backgroundColor = useCSSVariable("--color-background-base");
+  const foregroundColor = useCSSVariable("--color-text-base");
 
   useEffect(() => {
     if (isAuthLoaded) SplashScreen.hide();

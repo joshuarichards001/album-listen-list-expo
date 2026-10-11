@@ -15,6 +15,9 @@ Native version of the Album Listen List web app (`~/dev/album-listen-list`, Reac
 - Tailwind via NativeWind v5, set up like Expo's `with-tailwindcss` example. Style with `className`, not `StyleSheet`.
 - `globalClassNamePolyfill` is off, so React Native components ignore `className`. Import them from `@/tw`, adding a `useCssElement` wrapper there when you need a new one.
 - Design tokens live in `src/global.css` under `@theme static`. Read one in JS (navigation options, `ActivityIndicator` color) with `useCSSVariable("--color-…")`.
+- Color tokens keep the web app's names (`tailwind.config.js` there), so web classes like `bg-background-highlight` or `text-text-subdued` port unchanged. Map web one-offs to tokens: `text-yellow-500` → `text-star`, `text-red-500` → `text-danger`, `#666666` → `text-muted`. Never hardcode a hex value.
+- For font sizes use the native ramp (`text-subhead`, `text-body`, `text-title`, `text-title-lg`, `text-display`) instead of the web's `text-sm`/`text-xl`.
+- The app is dark only (`userInterfaceStyle: "dark"`), like the web app. Visual language: pill buttons (`rounded-full`), primary actions in `bg-spotify-green` with `text-black`, raised surfaces in `bg-background-highlight` with `rounded-lg`.
 - `package.json` overrides `lightningcss` to `1.30.1`; newer versions fail to compile `global.css` ("expected an object-like struct named Specifier"). `nativewind` and `react-native-css` are a pinned prerelease pair; upgrade them together and recheck the override.
 - Keep `nativewind-env.d.ts` in the `tsconfig.json` `include` list, even though `**/*.ts` covers it. Without it, Metro rewrites and reformats `tsconfig.json` on start.
 
