@@ -9,8 +9,15 @@ export const useCSSVariable: (variable: string) => string =
 export const View = (props: ComponentProps<typeof RNView> & { className?: string }) =>
   useCssElement(RNView, props, { className: "style" });
 
-export const Text = (props: ComponentProps<typeof RNText> & { className?: string }) =>
-  useCssElement(RNText, props, { className: "style" });
+export const Text = ({
+  className,
+  ...props
+}: ComponentProps<typeof RNText> & { className?: string }) =>
+  useCssElement(
+    RNText,
+    { ...props, className: `font-gotham ${className ?? ""}` },
+    { className: "style" },
+  );
 
 export const Pressable = (props: ComponentProps<typeof RNPressable> & { className?: string }) =>
   useCssElement<ReactComponent>(RNPressable, props, { className: "style" });

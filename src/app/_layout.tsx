@@ -1,3 +1,4 @@
+import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
@@ -13,13 +14,18 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   useSupabaseAuthListener();
   const isAuthLoaded = useRootStore((state) => state.isAuthLoaded);
+  const [fontsLoaded, fontError] = useFonts({
+    "Gotham-Medium": require("../../assets/fonts/Gotham-Medium.otf"),
+  });
+  const isReady = isAuthLoaded && (fontsLoaded || fontError !== null);
   const isSignedIn = useRootStore((state) => state.session !== null);
   const backgroundColor = useCSSVariable("--color-background-base");
   const foregroundColor = useCSSVariable("--color-text-base");
+  const fontFamily = useCSSVariable("--font-gotham");
 
   useEffect(() => {
-    if (isAuthLoaded) SplashScreen.hide();
-  }, [isAuthLoaded]);
+    if (isReady) SplashScreen.hide();
+  }, [isReady]);
 
   return (
     <>
@@ -28,6 +34,7 @@ export default function RootLayout() {
         screenOptions={{
           headerStyle: { backgroundColor },
           headerTintColor: foregroundColor,
+          headerTitleStyle: { fontFamily },
           headerShadowVisible: false,
           contentStyle: { backgroundColor },
         }}
