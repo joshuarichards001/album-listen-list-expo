@@ -2,7 +2,11 @@ import Storage from "expo-sqlite/kv-store";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-import { createUserSlice, type UserSlice } from "@/stores/user-slice";
+import {
+  createUserSlice,
+  partializeUserSlice,
+  type UserSlice,
+} from "@/stores/user-slice";
 
 export type RootState = UserSlice;
 
@@ -14,7 +18,9 @@ export const useRootStore = create<RootState>()(
     {
       name: "root-store",
       storage: createJSONStorage(() => Storage),
-      partialize: (state) => ({ id: state.id }),
+      partialize: (state) => ({
+        ...partializeUserSlice(state),
+      }),
     },
   ),
 );
