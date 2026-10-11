@@ -22,6 +22,13 @@ Native version of the Album Listen List web app (`~/dev/album-listen-list`, Reac
 - `package.json` overrides `lightningcss` to `1.30.1`; newer versions fail to compile `global.css` ("expected an object-like struct named Specifier"). `nativewind` and `react-native-css` are a pinned prerelease pair; upgrade them together and recheck the override.
 - Keep `nativewind-env.d.ts` in the `tsconfig.json` `include` list, even though `**/*.ts` covers it. Without it, Metro rewrites and reformats `tsconfig.json` on start.
 
+## Navigation
+
+- Signed-in screens live in `src/app/(tabs)/`, which uses `NativeTabs` (`expo-router/unstable-native-tabs`). Native tabs don't render headers, so the tabs share one `Stack` through the `(index,search,profile)` group: each tab gets its own stack instance, and a screen added there can be pushed from any tab. Each screen sets its title with `<Stack.Title>`.
+- When adding a tab, add it to the group name, `unstable_settings` (without an anchor every tab opens on `index`), and a `NativeTabs.Trigger` named `(<route>)`.
+- Navigation colors and fonts come from `useNavigationTheme` (`src/hooks/`), passed to `ThemeProvider` in the root layout. Set header styling there instead of per-screen `screenOptions`.
+- Make a tab screen's root a `ScrollView` with `contentInsetAdjustmentBehavior="automatic"` so large titles collapse and the tab bar insets correctly.
+
 ## Auth & State gotchas
 
 - **Env vars** (`EXPO_PUBLIC_*` in `.env.local`) are inlined at bundle time. Restart with `npx expo start --clear` after changing them.

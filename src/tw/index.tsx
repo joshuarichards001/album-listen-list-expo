@@ -1,6 +1,11 @@
 import { Image as ExpoImage } from "expo-image";
 import type { ComponentProps } from "react";
-import { Pressable as RNPressable, Text as RNText, View as RNView } from "react-native";
+import {
+  Pressable as RNPressable,
+  ScrollView as RNScrollView,
+  Text as RNText,
+  View as RNView,
+} from "react-native";
 import { type ReactComponent, useCssElement, useNativeVariable } from "react-native-css";
 
 export const useCSSVariable: (variable: string) => string =
@@ -24,3 +29,14 @@ export const Pressable = (props: ComponentProps<typeof RNPressable> & { classNam
 
 export const Image = (props: ComponentProps<typeof ExpoImage> & { className?: string }) =>
   useCssElement(ExpoImage, props, { className: "style" });
+
+export const ScrollView = (
+  props: ComponentProps<typeof RNScrollView> & {
+    className?: string;
+    contentContainerClassName?: string;
+  },
+) =>
+  useCssElement(RNScrollView, props, {
+    className: "style",
+    contentContainerClassName: "contentContainerStyle",
+  });
