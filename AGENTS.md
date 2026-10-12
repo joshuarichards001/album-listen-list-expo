@@ -6,10 +6,24 @@ Native version of the Album Listen List web app (`~/dev/album-listen-list`, Reac
 - Before any Expo, EAS, or React Native work, invoke the matching skill from the `expo` plugin (`expo-overview` if unsure which).
 - Add packages with `npx expo install <package>`, never `npm install <package>`.
 - After any code change, run `npm run format` then `npm run check` (Prettier check, `expo lint`, `tsc --noEmit`), and fix everything it reports before declaring the task done. Use `npm run lint:fix` for autofixable lint errors.
+- After changing logic or UI code, also test it in the simulator (see Verification).
 - Formatting is owned by Prettier (`.prettierrc`) and enforced through ESLint, so don't hand-format or add style rules to `eslint.config.js`.
 - `tsconfig.json` enables `noUncheckedIndexedAccess`: array and record lookups are `T | undefined`, so handle the `undefined` case (defaults, guards) rather than using `!`.
 - Routes live in `src/app/`. Keep components, hooks, and utils outside it.
 - Keep code comments to an absolute minimum. Only comment non-obvious gotchas that would cause a bug if missed (e.g. a deadlock or platform quirk). Don't write comments that explain what code does, restate names, narrate flow, or add JSDoc to simple functions. Put explanations in this file or the README instead.
+
+## Verification
+
+Passing `npm run check` doesn't prove a screen works. Test every logic or UI change in the iOS Simulator.
+
+- Run `npx expo start --ios` in the background (opens the app in Expo Go), or reuse Metro if it's already on port 8081. Don't set `CI=1`: it disables reloads.
+- Open the simulator panel so the user can watch. Use your simulator tools to tap, type, and screenshot.
+- After restarting Metro, the app keeps the old bundle. Relaunch it: `xcrun simctl terminate booted host.exp.Exponent`, then `xcrun simctl openurl booted <exp:// URL from Metro>`.
+- Navigate by tapping. Deep links (`<exp:// URL>/--/<route>`) push onto the current tab instead of switching tabs.
+- Test the whole flow, not just the first render: loading, error, and empty states, back navigation, and long text. Record animations with `xcrun simctl io booted recordVideo <file>.mov`.
+- Check the Metro output for errors and warnings.
+- If the app is signed out, ask the user to sign in. Never enter credentials yourself.
+- Report what you tested, with screenshots, and what you couldn't verify.
 
 ## Styling
 
