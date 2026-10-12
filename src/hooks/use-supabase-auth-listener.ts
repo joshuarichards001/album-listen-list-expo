@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 
+import { queryClient } from "@/lib/query-client";
 import { supabase } from "@/lib/supabase";
 import { useRootStore } from "@/stores/root-store";
 
@@ -11,6 +12,7 @@ export const useSupabaseAuthListener = () => {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (!session) queryClient.clear();
       setSession(session);
     });
 

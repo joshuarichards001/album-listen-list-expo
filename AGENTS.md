@@ -19,6 +19,9 @@ feature.
 - `tsconfig.json` enables `noUncheckedIndexedAccess`: array and record lookups are `T | undefined`,
   so handle the `undefined` case (defaults, guards) rather than using `!`.
 - Routes live in `src/app/`. Keep components, hooks, and utils outside it.
+- A platform file (`foo.ios.tsx`) can import only types from its base path (`@/components/foo`),
+  because Metro resolves that path back to the platform file. Put shared runtime code in a separate
+  module.
 - Keep code comments to an absolute minimum. Only comment non-obvious gotchas that would cause a bug
   if missed (e.g. a deadlock or platform quirk). Don't write comments that explain what code does,
   restate names, narrate flow, or add JSDoc to simple functions. Put explanations in this file or
@@ -44,7 +47,28 @@ Simulator.
   and long text. Record animations with `xcrun simctl io booted recordVideo <file>.mov`.
 - Check the Metro output for errors and warnings.
 - If the app is signed out, ask the user to sign in. Never enter credentials yourself.
+- Data changed outside the app (e.g. in the web app) only shows up after a refetch. Background and
+  reopen the app (HOME, then `xcrun simctl launch booted host.exp.Exponent`) to refetch on focus.
 - Report what you tested, with screenshots, and what you couldn't verify.
+
+### Test data
+
+The simulator is signed in to the user's real account. Make data changes only in the list named
+"Test List", which exists for agents to test on. Open it from the list switcher (top-left button on
+Home), and switch back to "Listen List" when you're done.
+
+- It starts with four albums: Flower Boy, Blonde, and In Rainbows (reviewed, 5★) and OK Computer
+  (not reviewed). Add and remove other albums freely, but leave those four in the list when you
+  finish. Until album search is ported, the app can't add albums back, so ask the user before
+  removing one of the four.
+- Reviews (`album_reviews`) belong to the user and album, not the list, so Test List shows the
+  user's real ratings. Flower Boy and Blonde are also in "Favourite Albums". Never change the
+  reviewed albums' ratings or notes.
+- To test reviews, use an album with no review (OK Computer, or one you added), then clear the
+  review when you're done. Removing an album from a list doesn't delete its review.
+- Don't rename, delete, or change the visibility of Test List or any other list. To test list
+  create, rename, visibility, or delete, make a throwaway list and delete it afterward.
+- Never change "Listen List", "Favourite Albums", or any other real list.
 
 ## Styling
 

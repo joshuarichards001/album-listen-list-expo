@@ -1,3 +1,4 @@
+import { QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
 import { Stack, ThemeProvider } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
@@ -7,7 +8,9 @@ import { useEffect } from "react";
 import "@/global.css";
 import { useNavigationTheme } from "@/hooks/use-navigation-theme";
 import { useSupabaseAuthListener } from "@/hooks/use-supabase-auth-listener";
+import { queryClient } from "@/lib/query-client";
 import { useRootStore } from "@/stores/root-store";
+import { GestureHandlerRootView } from "@/tw";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -26,17 +29,21 @@ export default function RootLayout() {
   }, [isReady]);
 
   return (
-    <ThemeProvider value={theme}>
-      <StatusBar style="light" />
-      <Stack screenOptions={{ headerShadowVisible: false }}>
-        <Stack.Protected guard={isSignedIn}>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        </Stack.Protected>
-        <Stack.Protected guard={!isSignedIn}>
-          <Stack.Screen name="welcome" options={{ headerShown: false }} />
-          <Stack.Screen name="login" options={{ title: "" }} />
-        </Stack.Protected>
-      </Stack>
-    </ThemeProvider>
+    <GestureHandlerRootView className="flex-1">
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider value={theme}>
+          <StatusBar style="light" />
+          <Stack screenOptions={{ headerShadowVisible: false }}>
+            <Stack.Protected guard={isSignedIn}>
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            </Stack.Protected>
+            <Stack.Protected guard={!isSignedIn}>
+              <Stack.Screen name="welcome" options={{ headerShown: false }} />
+              <Stack.Screen name="login" options={{ title: "" }} />
+            </Stack.Protected>
+          </Stack>
+        </ThemeProvider>
+      </QueryClientProvider>
+    </GestureHandlerRootView>
   );
 }

@@ -1,6 +1,7 @@
 import type { Session } from "@supabase/supabase-js";
 import type { StateCreator } from "zustand";
 
+import { listSignedOutState } from "@/stores/list-slice";
 import type { RootState } from "@/stores/root-store";
 
 type SpotifyTokens = {
@@ -42,7 +43,7 @@ export const createUserSlice: StateCreator<
 
   setSession: (session) => {
     if (!session) {
-      set({ ...signedOutState, isAuthLoaded: true });
+      set({ ...signedOutState, ...listSignedOutState, isAuthLoaded: true });
       return;
     }
 
