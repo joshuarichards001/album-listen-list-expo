@@ -6,7 +6,7 @@ import { AlbumListScreen } from "@/components/album-list/album-list-screen";
 import { AlbumListSkeleton, MessageState } from "@/components/album-list/album-list-states";
 import { ListSwitcher } from "@/components/list-switcher";
 import { albumsQueryOptions } from "@/lib/queries/albums";
-import { findDefaultList, listsQueryOptions } from "@/lib/queries/lists";
+import { findSelectedList, listsQueryOptions } from "@/lib/queries/lists";
 import { useRootStore } from "@/stores/root-store";
 import { ScrollView } from "@/tw";
 
@@ -22,8 +22,7 @@ export default function HomeScreen() {
     if (selectedListId !== null) queryClient.prefetchQuery(albumsQueryOptions(selectedListId));
   }, [queryClient, selectedListId]);
 
-  const list =
-    lists && (lists.find((l) => l.id === selectedListId) ?? findDefaultList(lists) ?? lists[0]);
+  const list = lists && findSelectedList(lists, selectedListId);
 
   if (list) {
     return (

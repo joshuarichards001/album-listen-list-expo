@@ -1,9 +1,10 @@
 import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeable";
 
 import { AlbumLink } from "@/components/album-list/album-link";
+import { AlbumRowContent } from "@/components/album-list/album-row-content";
 import { StarRatingBadge } from "@/components/star-rating-badge";
 import type { Album } from "@/lib/queries/albums";
-import { Image, Pressable, Text, View } from "@/tw";
+import { Pressable, Text } from "@/tw";
 
 type Props = {
   album: Album;
@@ -15,23 +16,13 @@ export function AlbumRow({ album, canRemove, onRemove }: Props) {
   const row = (
     <AlbumLink album={album} canRemove={canRemove} onRemove={onRemove}>
       <Pressable className="flex-row items-center gap-3 bg-background-base px-4 py-2 active:bg-background-highlight">
-        <Image
-          source={album.cover_art}
+        <AlbumRowContent
+          coverUrl={album.cover_art}
           recyclingKey={`${album.id}`}
-          transition={150}
-          className="size-14 rounded bg-background-highlight"
+          title={album.name}
+          subtitle={album.artist_name}
+          badge={album.rating ? <StarRatingBadge rating={album.rating} /> : null}
         />
-        <View className="min-w-0 flex-1 gap-1">
-          <View className="flex-row items-center gap-1.5">
-            <Text numberOfLines={1} className="shrink text-body text-text-base">
-              {album.name}
-            </Text>
-            {album.rating ? <StarRatingBadge rating={album.rating} /> : null}
-          </View>
-          <Text numberOfLines={1} className="text-subhead text-text-subdued">
-            {album.artist_name}
-          </Text>
-        </View>
       </Pressable>
     </AlbumLink>
   );

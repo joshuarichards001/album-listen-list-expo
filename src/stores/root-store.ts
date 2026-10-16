@@ -3,15 +3,17 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 import { createListSlice, type ListSlice, partializeListSlice } from "@/stores/list-slice";
+import { createSearchSlice, partializeSearchSlice, type SearchSlice } from "@/stores/search-slice";
 import { createUserSlice, partializeUserSlice, type UserSlice } from "@/stores/user-slice";
 
-export type RootState = UserSlice & ListSlice;
+export type RootState = UserSlice & ListSlice & SearchSlice;
 
 export const useRootStore = create<RootState>()(
   persist(
     (...a) => ({
       ...createUserSlice(...a),
       ...createListSlice(...a),
+      ...createSearchSlice(...a),
     }),
     {
       name: "root-store",
@@ -23,6 +25,7 @@ export const useRootStore = create<RootState>()(
       partialize: (state) => ({
         ...partializeUserSlice(state),
         ...partializeListSlice(state),
+        ...partializeSearchSlice(state),
       }),
     },
   ),

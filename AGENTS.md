@@ -50,6 +50,8 @@ Simulator.
 - Data changed outside the app (e.g. in the web app) only shows up after a refetch. Background and
   reopen the app (HOME, then `xcrun simctl launch booted host.exp.Exponent`) to refetch on focus.
 - Report what you tested, with screenshots, and what you couldn't verify.
+- Typing with no focused field sends Expo Go's dev hotkeys (`r` reloads the app). Check the field
+  has a cursor before typing, and fast typing can drop characters while a sheet's field is focusing.
 
 ### Test data
 
@@ -59,8 +61,7 @@ Home), and switch back to "Listen List" when you're done.
 
 - It starts with four albums: Flower Boy, Blonde, and In Rainbows (reviewed, 5★) and OK Computer
   (not reviewed). Add and remove other albums freely, but leave those four in the list when you
-  finish. Until album search is ported, the app can't add albums back, so ask the user before
-  removing one of the four.
+  finish. If you remove one, add it back from Search.
 - Reviews (`album_reviews`) belong to the user and album, not the list, so Test List shows the
   user's real ratings. Flower Boy and Blonde are also in "Favourite Albums". Never change the
   reviewed albums' ratings or notes.
@@ -128,6 +129,21 @@ Home), and switch back to "Listen List" when you're done.
   deleted, or another list take the name.
 - FlashList recycles row views, so keep row state out of rows, give covers a `recyclingKey`, and key
   stateful children (like `ReanimatedSwipeable`) by item id.
+
+## Edge functions
+
+- Functions live in `supabase/functions/` (Deno, excluded from the app's `tsc` and ESLint). Check
+  one with `npx deno@2 check` and `npx deno@2 lint` on its `index.ts`.
+- Deploy with `npx supabase functions deploy <name> --project-ref mkzfxxmdeoxrjdcsemmy`. The project
+  is shared with the web app, so ask the user before deploying.
+- `spotify-token` hands signed-in users a Spotify Client Credentials token, which search uses
+  (`src/lib/spotify.ts`). Search never uses the user's Spotify token, so it can't force a new sign
+  in. It reads the existing `SPOTIFY_CLIENT_ID` and `SPOTIFY_CLIENT_SECRET` function secrets.
+- Keep `verify_jwt = true` and also check the caller with `supabase.auth.getClaims(jwt)`, because
+  the platform check accepts the publishable key that ships in the app. Don't use the CLI's
+  `--auth user` template: `@supabase/server` rejects this project's legacy HS256 session JWTs.
+- `add-album` is deployed but its source isn't in this repo. The app assumes the web app's contract
+  (`{ provider: "spotify", provider_id }` in, `{ album }` out) and checks the response at runtime.
 
 ## Auth & State gotchas
 

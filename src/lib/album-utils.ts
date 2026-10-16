@@ -66,4 +66,4 @@ export const getRandomAlbum = (albums: Album[]) =>
   albums[Math.floor(Math.random() * albums.length)];
 
 export const getSpotifyAlbumUrl = (spotifyId: string) =>
-  `https://open.spotify.com/album/${spotifyId}`;
+  `https://open.spotify.com/album/${spotifyId}` as const;

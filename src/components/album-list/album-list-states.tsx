@@ -61,12 +61,18 @@ export function MessageState({ icon, title, message, actionLabel, onAction }: Me
   );
 }
 
-export function ErrorBanner({ onRetry }: { onRetry: () => void }) {
+type ErrorBannerProps = {
+  message?: string;
+  onRetry: () => void;
+};
+
+export function ErrorBanner({
+  message = "Couldn't refresh. Showing saved albums.",
+  onRetry,
+}: ErrorBannerProps) {
   return (
     <View className="flex-row items-center gap-3 rounded-lg bg-background-highlight px-4 py-3">
-      <Text className="flex-1 text-subhead text-text-subdued">
-        Couldn&apos;t refresh. Showing saved albums.
-      </Text>
+      <Text className="flex-1 text-subhead text-text-subdued">{message}</Text>
       <Pressable hitSlop={8} onPress={onRetry}>
         <Text className="text-subhead text-spotify-green">Retry</Text>
       </Pressable>

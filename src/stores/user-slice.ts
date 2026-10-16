@@ -3,6 +3,7 @@ import type { StateCreator } from "zustand";
 
 import { listSignedOutState } from "@/stores/list-slice";
 import type { RootState } from "@/stores/root-store";
+import { searchSignedOutState } from "@/stores/search-slice";
 
 type SpotifyTokens = {
   accessToken: string;
@@ -43,7 +44,12 @@ export const createUserSlice: StateCreator<
 
   setSession: (session) => {
     if (!session) {
-      set({ ...signedOutState, ...listSignedOutState, isAuthLoaded: true });
+      set({
+        ...signedOutState,
+        ...listSignedOutState,
+        ...searchSignedOutState,
+        isAuthLoaded: true,
+      });
       return;
     }
 

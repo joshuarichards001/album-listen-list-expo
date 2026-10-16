@@ -42,6 +42,8 @@ src/
 ├── lib/          # Supabase client, auth, generated types, query/mutation factories
 ├── stores/       # Zustand store, split into slices
 └── tw/           # className-aware wrappers around React Native components
+supabase/
+└── functions/    # Edge functions (Deno), e.g. spotify-token for album search
 ```
 
 Styling uses [Tailwind CSS](https://tailwindcss.com) through
@@ -57,4 +59,13 @@ npm run typecheck   # tsc --noEmit
 npm run check       # format check + lint + typecheck
 npm run gen:types   # regenerate Supabase types (needs `npx supabase login`)
 npx expo-doctor     # check dependency and config issues
+```
+
+## Edge functions
+
+Album search gets a Spotify app token from the `spotify-token` edge function. Deploy it to the
+shared Supabase project with:
+
+```bash
+npx supabase functions deploy spotify-token --project-ref mkzfxxmdeoxrjdcsemmy
 ```

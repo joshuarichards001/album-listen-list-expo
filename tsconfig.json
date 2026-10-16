@@ -12,5 +12,6 @@
       "@/assets/*": ["./assets/*"]
     }
   },
+  "exclude": ["node_modules", "ios", "android", "supabase/functions"],
   "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts", "nativewind-env.d.ts"]
 }

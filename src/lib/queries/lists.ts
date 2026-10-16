@@ -18,6 +18,9 @@ export const getListStatus = (list: List) => {
 
 export const findDefaultList = (lists: List[]) => lists.find(isDefaultList);
 
+export const findSelectedList = (lists: List[], selectedListId: number | null) =>
+  lists.find((list) => list.id === selectedListId) ?? findDefaultList(lists) ?? lists[0];
+
 export const validateListName = (name: string) => {
   const trimmed = name.trim();
   if (!trimmed) return "Enter a name for the list.";
